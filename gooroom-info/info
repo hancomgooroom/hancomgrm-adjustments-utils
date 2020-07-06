@@ -1,0 +1,4 @@
+RELEASE=2.0
+CODENAME=hancom-2.0
+DESCRIPTION="Hancom Gooroom 2.0"
+GRUB_TITLE=Hancom Gooroom 2.0

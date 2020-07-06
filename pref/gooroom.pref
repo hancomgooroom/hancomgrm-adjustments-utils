@@ -1,0 +1,15 @@
+Package: *
+Pin: release o=Hancom
+Pin-Priority: 910
+
+Package: *
+Pin: release o=Gooroom
+Pin-Priority: 900
+
+Package: *
+Pin: release o=Debian
+Pin-Priority: 500
+
+Package: linux-image-amd64
+Pin: release o=Debian
+Pin-Priority: -1

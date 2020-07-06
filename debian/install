@@ -1,0 +1,10 @@
+# /etc/gooroom/adjustments
+z-update-hancomgrm-adjustments-utils.execute /etc/gooroom/adjustments
+#- gooroom.pref
+pref/gooroom.pref /opt/hancomgrm-adjustments-utils/pref
+#- info
+gooroom-info/info /opt/hancomgrm-adjustments-utils/gooroom-info
+#- schemas
+schemas/* /opt/hancomgrm-adjustments-utils/schemas
+#- themes
+themes/* /opt/hancomgrm-adjustments-utils/themes

@@ -1,0 +1,86 @@
+#!/bin/bash
+
+#
+# Copyright (C) 2019-2020 Jongkyung Woo <jkwoo@gooroom.kr>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+#
+# Initial
+#
+LOG=/tmp/.z-update-hancomgrm-adjustments-utils.log
+exec > >(tee $LOG) 2>&1
+
+set -x
+echo `date +%F-%T-%N`
+
+ORIGIN_DIR=/opt/hancomgrm-adjustments-utils
+
+# /etc/apt/preferences.d/gooroom.pref
+if [ -e ${ORIGIN_DIR}/pref/gooroom.pref ]; then
+    target_dir=/etc/apt/preferences.d
+    cp ${ORIGIN_DIR}/pref/gooroom.pref ${target_dir}
+fi
+
+# /etc/gooroom/info
+if [ -e ${ORIGIN_DIR}/gooroom-info/info ]; then
+    target_dir=/etc/gooroom
+    cp ${ORIGIN_DIR}/gooroom-info/info ${target_dir}
+fi
+
+# grub title
+# - set color_normal
+grub_cfg=/etc/grub.d/05_debian_theme
+if grep -q "## Gooroom Title Theme" ${grub_cfg}; then
+    sed -i -e s'@echo \"  set color_normal=light-cyan/black\"@echo \"  set color_normal=white/black\"@g' ${grub_cfg}
+    sed -i -e s'@echo \"  set color_highlight=white/black\"@echo \"  set color_highlight=light-cyan/black\"@g' ${grub_cfg}
+fi
+
+# - grub_title="\"Hancom Gooroom 2.0\""
+grub_title="\"$(grep "GRUB_TITLE" /etc/gooroom/info | awk -F'=' '{print $2}')\""
+grub_cfg=/etc/grub.d/10_linux
+if grep -q 'OS=\"Gooroom OS' ${grub_cfg}; then
+    sed -i -e s'@OS=\"Gooroom OS.*@OS='"${grub_title}"'@g' ${grub_cfg}
+fi
+
+# grub menu
+# - /usr/share/plymouth/themes/gooroom/gooroom_bg_17_logo.png
+grub_cfg=/etc/default/grub
+grub_bg_img=/usr/share/backgrounds/hancom-gooroom/hancom-gooroom-bootmenu-bg01.png
+if grep -q "## Gooroom Background Image" ${grub_cfg}; then
+    if [ -e ${grub_bg_img} ]; then
+        sed -i -e s"@GRUB_BACKGROUND=.*@GRUB_BACKGROUND=${grub_bg_img}@g" ${grub_cfg}
+    fi
+fi
+
+# - /usr/share/glib-2.0/schemas/10_gooroom-configuration.gschema.override
+# - /usr/share/glib-2.0/schemas/90_hancom-gooroom-configuration.gschema.override
+gschema_file=90_hancom-gooroom-configuration.gschema.override
+target_dir=/usr/share/glib-2.0/schemas
+if [ -e ${ORIGIN_DIR}/schemas/${gschema_file} ]; then
+    cp ${ORIGIN_DIR}/schemas/${gschema_file} ${target_dir}/${gschema_file}
+fi
+
+# themes
+# - /usr/share/gnome-control-center/themes/gooroom-themes.ini
+themes_ini=gooroom-themes.ini
+target_dir=/usr/share/gnome-control-center/themes
+if [ -e ${target_dir}/${themes_ini} -a ${ORIGIN_DIR}/themes/${themes_ini} ]; then
+    cp ${ORIGIN_DIR}/themes/${themes_ini} ${target_dir}/${themes_ini}
+fi
+
+# boot splash
+# - /usr/share/plymouth/themes/gooroom-logo/gooroom-logo.plymouth
+# - /usr/share/plymouth/themes/gooroom-logo/logo.script

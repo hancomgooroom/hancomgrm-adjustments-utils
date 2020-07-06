@@ -1,0 +1,12 @@
+Source: hancomgrm-adjustments-utils
+Section: utils
+Priority: optional
+Maintainer: jongkyung.woo <jkwoo@gooroom.kr>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.8
+
+Package: hancomgrm-adjustments-utils
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Hancom Gooroom Adjustments Utility
+ Hancom Goorooom installation and environment Utility

@@ -1,0 +1,13 @@
+#!/bin/sh
+# postinst script for hancomgrm-adjustments-utils
+#
+# see: dh_installdeb(1)
+
+# Excute z-update-hancomgrm-adjustments-utils.execute
+
+execute_file="z-update-hancomgrm-adjustments-utils.execute"
+if [ -e /etc/gooroom/adjustments/$execute_file ]; then
+    /etc/gooroom/adjustments/$execute_file
+fi
+
+exit 0
