@@ -1,3 +1,10 @@
+hancomgrm-adjustments-utils (0.1.5+han2u1) unstable; urgency=medium
+
+  [ jongkyung.woo ]
+  * [c5de402f] Added gooroom-info dependency
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Wed, 08 Jul 2020 21:07:06 +0900
+
 hancomgrm-adjustments-utils (0.1.4+han2u1) unstable; urgency=medium
 
   * Released Version 0.1.4+han2u1
