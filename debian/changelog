@@ -1,3 +1,11 @@
+hancomgrm-adjustments-utils (0.1.5+han2u2) unstable; urgency=medium
+
+  [ jongkyung.woo ]
+  * [049a1526] Added COPYING
+  * [4878c32b] Released Hancom Gooroom 2.2
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Thu, 01 Apr 2021 12:17:04 +0900
+
 hancomgrm-adjustments-utils (0.1.5+han2u1) unstable; urgency=medium
 
   [ jongkyung.woo ]
